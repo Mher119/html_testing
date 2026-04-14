@@ -149,16 +149,16 @@ export default function HomePage() {
               </div>
 
               {/* Info Block */}
-              <div className="bg-[#2D3233] rounded-2xl p-3 flex gap-3 items-start mt-2 w-full md:w-fit md:max-w-[340px]">
+              <div className="bg-[#2D3233] rounded-2xl p-3 flex gap-3 items-start mt-2 w-full md:w-full md:max-w-[67%]">
                 <span className="text-[#fd972e] font-bold text-lg leading-none">
                   !
                 </span>
                 <p className="text-[11px] text-gray-300 leading-snug">
                   Следуя плану на 3 месяца и более, люди получают
                   {/* on desktop */}
-                  <br className="hidden md:block" />в 2 раза лучший результат,
+                  <br className="hidden md:block" />{" "} в 2 раза лучший результат,
                   {/* on mobile */}
-                  <br className="block md:hidden" />
+                 
                   чем за 1 месяц
                 </p>
               </div>
@@ -199,7 +199,7 @@ export default function HomePage() {
                   {/* " " for desktop */}
                   <br className="block md:hidden" />и{" "}
                   <span className="underline decoration-gray-600">
-                    Политикой
+                    Политикой {" "}
                     <br className="hidden md:block" />
                     конфиденциальности
                   </span>
