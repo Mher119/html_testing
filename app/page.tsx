@@ -15,7 +15,7 @@ interface PricingPlan {
 
 export default function HomePage() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
-  const [timeLeft, setTimeLeft] = useState(10);
+  const [timeLeft, setTimeLeft] = useState(120);
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [showCheckboxError, setShowCheckboxError] = useState(false);
@@ -57,7 +57,7 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#12171d] text-white pb-20 font-sans">
       {/* Timer Header */}
       <header className="sticky top-0 z-50 p-3 text-center bg-[#1D5B43] min-h-[92px] md:min-h-[102px] flex flex-col justify-center ">
-        <p className="text-[14px] font-medium tracking-tight text-white md:text-[31px]">
+        <p className="text-[12px] font-medium tracking-tight text-white md:text-[20px]">
           Успейте открыть пробную неделю
         </p>
         <div className="flex items-center justify-center gap-2 mt-1">
@@ -67,7 +67,7 @@ export default function HomePage() {
             ✦
           </span>
           <div
-            className={`text-3xl font-black tracking-wider tabular-nums ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : "text-[#FFBB00]"}`}
+            className={`text-3xl font-bold tracking-wider tabular-nums ${timeLeft <= 30 && timeLeft > 0 ? "animate-blink-red" : "text-[#FFBB00]"}`}
           >
             {formatTime(timeLeft)}
           </div>
