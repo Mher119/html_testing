@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import PricingCard from "@/components/PricingCard";
 import Image from "next/image";
 
+
 interface PricingPlan {
   id: string | number;
   is_best: boolean;
@@ -15,7 +16,7 @@ interface PricingPlan {
 
 export default function HomePage() {
   const [plans, setPlans] = useState<PricingPlan[]>([]);
-  const [timeLeft, setTimeLeft] = useState(120);
+  const [timeLeft, setTimeLeft] = useState(7);
   const [selectedPeriod, setSelectedPeriod] = useState<string | null>(null);
   const [agreed, setAgreed] = useState(false);
   const [showCheckboxError, setShowCheckboxError] = useState(false);
@@ -93,7 +94,7 @@ export default function HomePage() {
           {/* Flex container: Column on mobile (col), Row on desktop (row) */}
           <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-center md:items-start relative z-10">
             {/* Athlete Image Container */}
-            <div className="w-full md:w-2/5 flex justify-center items-end self-end overflow-visible min-h-[230px] md:min-h-[605px]">
+             <div className="w-full md:w-2/5 flex justify-center items-end self-end overflow-visible min-h-[230px] md:min-h-[605px]">
               <Image
                 src="/athlete-pro.webp"
                 alt="Athlete"

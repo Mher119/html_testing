@@ -32,7 +32,7 @@ export default function PricingCard({
   return (
     <div
       onClick={onSelect}
-      className={`relative cursor-pointer transition-all duration-300 rounded-[28px] overflow-visible border-2 flex bg-[#2D3233] w-full p-[1px] ${
+      className={`relative cursor-pointer transition-all duration-300 rounded-[28px] overflow-visible border-2 flex bg-[#2D3233] w-full p-[1px] md:items-stretch ${
         selected
           ? "border-[#FDB056] z-10 shadow-lg shadow-[#FDB056]/10"
           : isMain && !isForever
@@ -40,9 +40,9 @@ export default function PricingCard({
             : "border-white/10 hover:border-white/20"
       } ${
         isMain
-          ? "md:flex-row items-center justify-between min-h-[110px] md:min-h-[130px]"
+          ? "md:h-[130px]"
           : `md:flex-col items-center justify-between ${
-              isForever ? "md:min-h-[150px]" : "md:min-h-[220px]"
+              isForever ? "md:h-[150px]" : "md:h-[220px]"
             }`
       }`}
     >
@@ -80,14 +80,15 @@ export default function PricingCard({
               <span className="font-[900] text-3xl">{currentPrice}</span>
               <span className="ml-1.5 font-[900] text-xl">₽</span>
             </div>
-            {!isExpired && (
-              <div className="relative mt-1 text-gray-500 text-[13px] flex items-center">
-                <span className="relative">
-                  {oldPrice} ₽
-                  <span className="absolute left-0 top-1/2 w-full h-[1.2px] bg-gray-500 -translate-y-1/2"></span>
-                </span>
-              </div>
-            )}
+
+            <div
+              className={`relative mt-1 text-gray-500 text-[13px] flex items-center transition-opacity duration-300 ${isExpired ? "opacity-0 invisible" : "opacity-100"}`}
+            >
+              <span className="relative">
+                {oldPrice} ₽
+                <span className="absolute left-0 top-1/2 w-full h-[1.2px] bg-gray-500 -translate-y-1/2"></span>
+              </span>
+            </div>
           </div>
         </div>
 
@@ -117,19 +118,20 @@ export default function PricingCard({
       </div>
 
       {/* --- DESKTOP VIEW --- */}
-      <div className="hidden md:flex w-full items-center justify-between h-full relative px-6 py-4 overflow-visible box-border">
+      <div className="hidden md:flex w-full items-stretch justify-between h-full relative px-6 py-4 overflow-visible box-border">
         {isMain ? (
           <>
-            {/* Գնի հատվածը (Ձախ կողմում) */}
             {/* Price Section (Left Side) */}
             <div className="flex flex-col w-[55%] items-start justify-center pl-10 h-full">
-              <p className="font-medium text-lg text-white mb-1 first-letter:uppercase lowercase pl-6">
+              <p className="font-medium text-lg text-white mb-1 first-letter:uppercase lowercase pl-6 h-[28px]">
                 {plan.period}
               </p>
-              <div className="flex flex-col items-center">
-                <div className="flex items-start pt-1">
-                  {/* items-start-ը երկուսին էլ կպահի վերևի գծի վրա */}
-                  {/* For the main plan, we want the price to be more prominent, so we use a larger font size and a bolder weight. The color also changes based on whether the plan is expired or not. */}
+
+              {/* Ներմուծված է min-w և հստակ բարձրություններ, որպեսզի կոդը չշարժվի */}
+              <div className="flex flex-col items-center w-[130px] h-[76px] justify-between">
+                <div className="flex items-baseline pt-1 h-[48px]">
+                  {" "}
+                  {/* Ֆիքսված բարձրություն */}
                   <span
                     className={`font-[700] text-5xl leading-none ${isExpired ? "text-white" : "text-[#fd972e]"}`}
                   >
@@ -138,24 +140,21 @@ export default function PricingCard({
                   <span
                     className={`ml-2 font-[700] text-5xl leading-none pt-[1px] ${isExpired ? "text-white" : "text-[#fd972e]"}`}
                   >
-                    {/* pt-[2px]-ով կամ pt-[4px]-ով կարող ես միլիմետրերով կարգավորել, որ լրիվ հավասարվեն վերևից */}
-                    {/* You can adjust it in millimeters using pt-[2px] or pt-[4px] so that they align perfectly from the top */}
                     ₽
                   </span>
                 </div>
-                {!isExpired && (
-                  <div className="text-gray-400 text-lg line-through self-end -mt-1">
-                    {oldPrice} ₽
-                  </div>
-                )}
+
+                {/* Փոխված է transition-opacity և տրված է ֆիքսված բարձրություն */}
+                <div
+                  className={`h-[24px] relative self-end text-white/40 text-[16px] flex items-center mr-[-10px] line-through transition-opacity duration-300 ${isExpired ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+                >
+                  {oldPrice} ₽
+                </div>
               </div>
             </div>
 
-            {/* For the main plan, we show a more detailed description on the right side */}
-
             <div className="flex flex-col w-[40%] items-end justify-center h-full pr-6 pl-10">
-              <div className="flex flex-col items-start text-right leading-tight text-white/50 text-[11px]">
-                {/* text-[11px] - մի փոքր փոքրացրինք, որ հաստատ տեղավորվի */}
+              <div className="flex flex-col items-start text-right leading-tight text-white/50 text-[12px]">
                 <span className="whitespace-nowrap">
                   Для тех, кто хочет всегда быть в форме
                 </span>
@@ -166,30 +165,37 @@ export default function PricingCard({
             </div>
           </>
         ) : (
-          <div className="flex flex-col items-start w-full h-full justify-between">
-            <div className="mt-9 text-center w-full font-medium text-[15px] text-gray-100 first-letter:uppercase lowercase">
+          <div className="flex flex-col items-start w-full h-full">
+            <div className="mt-6 text-center w-full font-medium text-[15px] text-gray-100 first-letter:uppercase lowercase h-[24px]">
               {plan.period}
             </div>
 
-            <div className="flex flex-col items-center justify-center flex-grow py-2 w-full mt-2">
-              <div className="flex items-center text-white">
-                <span className="font-[700] text-2xl">{currentPrice}</span>
-                <span className="ml-2 font-[700] text-2xl">₽</span>
+            {/* Հանված է flex-grow, ավելացված է ֆիքսված հաստատուն բարձրություն h-[60px] */}
+            <div className="flex flex-col items-center justify-center w-full h-[60px] mt-auto mb-auto">
+              <div className="flex items-center text-white h-[32px]">
+                {" "}
+                {/* Ֆիքսված բարձրություն */}
+                <span className="font-[700] text-2xl leading-none">
+                  {currentPrice}
+                </span>
+                <span className="ml-2 font-[700] text-2xl leading-none">₽</span>
               </div>
-              {!isExpired && (
-                <div className="relative self-end text-white/40 text-[14px] flex items-center mr-5">
-                  <span className="relative">
-                    {oldPrice} ₽
-                    <span className="absolute left-0 top-1/2 w-full h-[1px] bg-white/40 -translate-y-1/2"></span>
-                  </span>
-                </div>
-              )}
+
+              {/* Փոխված է transition-opacity և տրված է ֆիքսված բարձրություն */}
+              <div
+                className={`h-[24px] relative self-end text-white/40 text-[16px] flex items-center mr-5 transition-opacity duration-300 ${isExpired ? "opacity-0 invisible" : "opacity-100"}`}
+              >
+                <span className="relative">
+                  {oldPrice} ₽
+                  <span className="absolute left-0 top-1/2 w-full h-[1px] bg-white/40 -translate-y-1/2"></span>
+                </span>
+              </div>
             </div>
 
             {!isForever && (
               <div className="h-[35px] pb-1 w-full flex justify-start -ml-4 mt-7 overflow-visible">
                 <div className=" w-full">
-                  <p className="text-[10px] text-white/50 text-start leading-tight font-small whitespace-nowrap">
+                  <p className="text-[12px] text-white/50 text-start leading-tight font-small whitespace-nowrap">
                     {plan.id === 1 ||
                     plan.period.toLowerCase().includes("1 неделя") ? (
                       "Чтобы просто начать"
